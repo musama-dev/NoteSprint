@@ -49,7 +49,7 @@ function Auth() {
       if (error.code === "auth/operation-not-allowed") {
         alert("Google Sign-in Enable Nahi Hai!\n\nFix: Firebase Console -> Authentication -> Sign-in method -> Google Enable karein.");
       } else if (error.code === "auth/unauthorized-domain") {
-        alert("Unauthorized Domain!\n\nFix: Firebase Console -> Authentication -> Settings -> Authorized domains mein 'localhost' add karein.");
+        alert("Unauthorized Domain!\n\nFix: Firebase Console -> Authentication -> Settings -> Authorized domains mein 'notesprint-ai.vercel.app' add karein.");
       } else if (error.code !== "auth/popup-closed-by-user") {
         alert(`Firebase Auth Error [${error.code || 'unknown'}]:\n${error.message || 'Google Sign-In Failed'}`);
       }
