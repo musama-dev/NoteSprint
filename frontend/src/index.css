@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #0F172A;
+    background-color: #FAFAFC;
+    background-image: 
+      radial-gradient(at 15% 15%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
+      radial-gradient(at 85% 85%, rgba(99, 102, 241, 0.07) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0; /* Hides browser default header (date/title) and footer (localhost URL) */
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  html, body {
+    background: #FFFFFF !important;
+    background-image: none !important;
+    color: #0F172A !important;
+    margin: 0 !important;
+    padding: 10mm 12mm !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Force background colors on dark pills */
+  .bg-slate-900 {
+    background-color: #0F172A !important;
+    color: #FFFFFF !important;
+  }
+
+  .text-white {
+    color: #FFFFFF !important;
+  }
+
+  /* Hide non-printable UI elements completely */
+  nav,
+  aside,
+  header,
+  footer,
+  form,
+  .print\:hidden,
+  button,
+  .no-print {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* Reset outer containers so no trailing white space / blank pages occur */
+  body > div,
+  main,
+  #root,
+  .min-h-screen {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Notes View Printable Container */
+  #note-view-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #FFFFFF !important;
+  }
+
+  /* Avoid page breaks inside cards */
+  .break-inside-avoid,
+  #note-revision,
+  #note-questions,
+  #note-diagram,
+  #note-charts {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Fix Recharts SVG rendering during print */
+  .recharts-responsive-container {
+    width: 100% !important;
+    height: 240px !important;
+    min-height: 240px !important;
+    overflow: visible !important;
+  }
+
+  svg {
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .print\:flex,
+  .is-pdf-export .print\:flex {
+    display: flex !important;
+  }
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /notes
+Disallow: /history
+
+Sitemap: https://notesprint-ai.vercel.app/sitemap.xml
