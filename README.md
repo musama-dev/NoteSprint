@@ -4,7 +4,7 @@
 
 ### Type any topic → exam-ready AI notes with diagrams, charts and PDFs in ~30 seconds.
 
-**[Live App](https://www.notesprintai.vercel.app)** · React + Express + Gemini · Deployed on Vercel & Render
+**[Live App](https://notesprint-ai.vercel.app)** · React + Express + Gemini · Deployed on Vercel & Render
 
 </div>
 

@@ -189,7 +189,7 @@ function NotesView({ note }) {
           </span>
         </div>
         <div className="text-right text-xs font-semibold text-slate-500">
-          notesprintai.vercel.app
+          notesprint-ai.vercel.app
         </div>
       </div>
 
@@ -321,7 +321,7 @@ function NotesView({ note }) {
           <span>{note.subject || "Exam Study Notes"}</span>
         </div>
         <div>
-          www.notesprintai.vercel.app
+          www.notesprint-ai.vercel.app
         </div>
       </div>
     </div>
