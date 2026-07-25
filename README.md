@@ -2,7 +2,11 @@
 
 <img src="images/logo.svg" alt="NoteSprint AI Logo" width="480" />
 
-### Type any topic → exam-ready AI notes with diagrams, charts and PDFs in ~30 seconds.
+### Everything You Need to Study. Powered by AI.
+
+**Create comprehensive notes, visual diagrams, MCQ quizzes, and downloadable PDFs designed for exams.**
+
+<br />
 
 **[Live App](https://notesprint-ai.vercel.app)** · React + Express + Gemini · Deployed on Vercel & Railway
 
