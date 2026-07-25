@@ -35,8 +35,8 @@
   <!-- Yellow Lightning Bolt Overlay -->
   <path d="M 142 75 L 105 138 L 132 138 L 115 198 L 168 126 L 140 126 Z" fill="url(#bolt-grad)"/>
 
-  <!-- Text: "Note" (White) -->
-  <text x="275" y="172" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="106" font-weight="900" fill="#FFFFFF">Note</text>
+  <!-- Text: "Note" (Dark Charcoal) -->
+  <text x="275" y="172" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="106" font-weight="900" fill="#09090B">Note</text>
 
   <!-- Text: "Sprint" (Yellow) -->
   <text x="525" y="172" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="106" font-weight="900" fill="#F59E0B">Sprint</text>
