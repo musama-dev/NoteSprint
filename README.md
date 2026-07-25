@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="images/logo.png" alt="NoteSprint AI Logo" width="480" />
+<img src="images/logo.svg" alt="NoteSprint AI Logo" width="480" />
 
 ### Type any topic → exam-ready AI notes with diagrams, charts and PDFs in ~30 seconds.
 
