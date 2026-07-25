@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 export const serverURL =
   import.meta.env.VITE_BACKEND_URL ||
   import.meta.env.VITE_SERVER_URL ||
-  "http://localhost:5000";
+  "https://notesprint-production-a300.up.railway.app";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
