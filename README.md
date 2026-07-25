@@ -4,15 +4,15 @@
 
 ### Type any topic → exam-ready AI notes with diagrams, charts and PDFs in ~30 seconds.
 
-**[Live App](https://notesprint-ai.vercel.app)** · React + Express + Gemini · Deployed on Vercel & Render
+**[Live App](https://notesprint-ai.vercel.app)** · React + Express + Gemini · Deployed on Vercel & Railway
 
 </div>
 
-![NoteSprint AI — generated note with subtopics, markdown and importance badge](screenshots/hero-notes.png)
+![NoteSprint AI — Hero Section Banner](images/Hero-Section.png)
 
 ---
 
-## What it does
+## 🌟 What it does
 
 NoteSprint AI is an AI study partner for students. Sign in with Google, get **50 free credits**, type a topic ("TCP vs UDP", "Photosynthesis", "Newton's Laws") and Gemini generates a complete study document:
 
@@ -23,32 +23,33 @@ NoteSprint AI is an AI study partner for students. Sign in with Google, get **50
 - 📊 **Charts** — AI-chosen bar / line / pie data rendered with Recharts
 - 🧠 **Quiz Mode** — 10 AI-generated MCQs grounded in each note, with instant right/wrong feedback, explanations and a final score; retakes are free (quiz is cached per note)
 - 📄 **One-click PDF download** with the exact page layout (works on mobile)
-- 💳 **Credit system with Stripe** — 5 credits per note, 1 credit per quiz, buy more on the pricing page
+- 💳 **Credit system with Stripe** — 10 credits per note, 5 credits per quiz, buy more on the pricing page
 - ✉️ **Welcome email on first sign-up** — queued through Redis + BullMQ
 - 🗂 **History** — every note saved, browsable, re-downloadable, deletable
 
-![AI-generated Mermaid diagram and Recharts charts](screenshots/diagram-charts.png)
+![AI-generated Notes & Flow Diagrams](images/Fullnotes.png)
 
+![AI-generated Mermaid Diagrams & Recharts Visual Data](images/diagrams-chart.png)
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
-![Architecture diagram](screenshots/architecture.svg)
+![Architecture Diagram](images/architecture.png)
 
-**Request flow:** the React SPA (Vercel) authenticates via Firebase's Google popup, then talks to the Express API (Docker container on Render) with an httpOnly JWT cookie. The API builds a strict JSON prompt, calls Gemini through LangChain, stores the result in MongoDB Atlas and deducts a credit. Stripe Checkout handles payments — credits are only granted by the **webhook**, never the redirect. First-time sign-ups enqueue a welcome-email job in Redis (BullMQ); an in-process worker sends it via SMTP with a graceful direct-send fallback if Redis is down.
+**Request flow:** The React SPA (Vercel) authenticates via Firebase's Google popup, then talks to the Express API (Docker container on Railway) with an httpOnly JWT cookie. The API builds a strict JSON prompt, calls Gemini through LangChain, stores the result in MongoDB Atlas and deducts credits. Stripe Checkout handles payments — credits are only granted by the **webhook**, never the redirect. First-time sign-ups enqueue a welcome-email job in Redis (BullMQ); an in-process worker sends it via SMTP with a graceful direct-send fallback if Redis is down.
 
-## Tech stack
+## 🛠️ Tech Stack
 
 | Layer | Tech |
 |---|---|
 | Frontend | React 19, Vite, Tailwind CSS 4, Redux Toolkit, Framer Motion, react-markdown, Mermaid, Recharts |
 | Auth | Firebase Google sign-in (client) → JWT in httpOnly cookie (server) |
 | Backend | Node.js, Express 5, Mongoose, LangChain (`@langchain/google-genai`), BullMQ, Nodemailer + Mailgen |
-| Data & infra | MongoDB Atlas, Redis (Docker locally / Render Key Value in prod), Docker, Vercel, Render |
+| Data & Infra | MongoDB Atlas, Redis (Docker locally / Key Value in prod), Docker, Vercel, Railway |
 | Payments | Stripe Checkout + signed webhooks |
 
-## Engineering problems solved
+## ⚡ Engineering Problems Solved
 
 | Problem | Root cause | Fix |
 |---|---|---|
@@ -61,19 +62,19 @@ NoteSprint AI is an AI study partner for students. Sign in with Google, get **50
 | Sandbox testers could buy unlimited credits | Test-mode payments are free | Server-side credit cap (500) enforced before creating a checkout session |
 | Concurrent generations sometimes failed | Free-tier Gemini throttles parallel requests per key | Retries with backoff now; billing tier / BullMQ job queue as the scale path |
 
-## Run it locally
+## 🚀 Run It Locally
 
 **Prereqs:** Node 20+, Docker Desktop, a MongoDB Atlas cluster, a [Gemini API key](https://aistudio.google.com), a Firebase project (Google sign-in enabled), Stripe test keys, and SMTP credentials (e.g. Gmail app password).
 
 ```bash
-git clone <this-repo>
+git clone https://github.com/musama-dev/NoteSprint.git
 
 # 1. backend
 cd backend
 npm install
 docker compose up -d        # starts Redis on :6379
 # create backend/.env (see table below)
-npm run dev                 # http://localhost:3000
+npm run dev                 # http://localhost:5000
 
 # 2. frontend (new terminal)
 cd frontend
@@ -82,14 +83,14 @@ npm install
 npm run dev                 # http://localhost:5173
 
 # 3. stripe webhooks (optional, new terminal)
-stripe listen --forward-to localhost:3000/api/payment/webhook
+stripe listen --forward-to localhost:5000/api/payment/webhook
 ```
 
 ### backend/.env
 
 | Variable | Purpose |
 |---|---|
-| `PORT` | API port (3000 in dev; Render injects its own) |
+| `PORT` | API port (5000 in dev; Railway / Render injects its own) |
 | `MONGO_URI` | MongoDB Atlas connection string |
 | `JWT_SECRET` | Signs the auth cookie |
 | `NODE_ENV` | `development` / `production` (controls cookie flags) |
@@ -98,42 +99,30 @@ stripe listen --forward-to localhost:3000/api/payment/webhook
 | `GEMINI_MODEL` | Optional model override (default `gemini-3-flash-preview`; e.g. `gemini-3.1-flash-lite` to use a separate free-tier quota bucket) |
 | `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Stripe test keys |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SENDER_EMAIL` | Welcome-email SMTP |
-| `REDIS_URL` | Optional locally (defaults to `redis://localhost:6379`); Render Key Value URL in prod |
+| `REDIS_URL` | Optional locally (defaults to `redis://localhost:6379`); Redis Key Value URL in prod |
 
-## API overview
+## 📡 API Overview
 
 | Method & path | Auth | Purpose |
 |---|---|---|
 | `POST /api/auth/google` | — | Sign in / first-time sign-up (queues welcome email) |
 | `POST /api/auth/logout` | — | Clear session cookie |
 | `GET /api/user/me` | 🔒 | Current user + credits |
-| `POST /api/notes/generate` | 🔒 | Generate notes (5 credits) |
+| `POST /api/notes/generate` | 🔒 | Generate notes (10 credits) |
 | `GET /api/notes/my-notes` | 🔒 | All of the user's notes, newest first |
 | `DELETE /api/notes/:id` | 🔒 | Delete own note |
-| `POST /api/notes/:id/quiz` | 🔒 | Generate a 10-question MCQ quiz for a note (1 credit, cached — retakes free) |
+| `POST /api/notes/:id/quiz` | 🔒 | Generate a 10-question MCQ quiz for a note (5 credits, cached — retakes free) |
 | `POST /api/payment/checkout` | 🔒 | Create Stripe Checkout session (credit cap enforced) |
 | `POST /api/payment/webhook` | Stripe signature | Grant credits on `checkout.session.completed` |
 | `GET /api/health` | — | Uptime / wake-up check |
 
-## Deployment notes
+## 🌐 Deployment Notes
 
-- **Frontend → Vercel.** Add the production domain to Firebase's authorized domains.
-- **Backend → Render** (Docker runtime, root directory `backend`). Set all env vars; don't set `PORT`.
-- **Redis → Render Key Value** (free tier, maxmemory policy **`noeviction`**) → its internal URL becomes `REDIS_URL`.
-- **MongoDB Atlas:** allow Render's outbound IPs (or `0.0.0.0/0`) in Network Access.
-- **Stripe:** add a webhook endpoint for `checkout.session.completed` pointing at `/api/payment/webhook`, and use its signing secret.
-- Free-tier Render sleeps after idle — the frontend shows a "waking up the server" screen during the ~50 s cold start, and `/api/health` works with uptime pingers.
-
-## Roadmap
-
-- [x] Quiz Mode — MCQ practice tests generated from notes
-- [ ] Flashcards generated from notes (with Anki export)
-- [ ] Verify Firebase ID tokens server-side (`firebase-admin`) instead of trusting the client
-- [ ] Move note generation itself onto the BullMQ queue with real progress
-- [ ] Per-user rate limiting
-- [ ] Paid Gemini tier for true concurrent generation
-- [ ] Custom domain
+- **Frontend → Vercel.** Add the production domain (`notesprint-ai.vercel.app`) to Firebase's authorized domains.
+- **Backend → Railway** (Docker runtime, root directory `.`). Set all env vars (`PORT=5000`, `MONGO_URI`, `GEMINI_API_KEY`, etc.).
+- **MongoDB Atlas:** Allow `0.0.0.0/0` in Network Access so Railway container can connect.
+- **Stripe:** Add a webhook endpoint for `checkout.session.completed` pointing at `/api/payment/webhook`.
 
 ---
 
-<div align="center">Built by <b>Mubeen Khan</b> — React · Node · MongoDB · Gemini</div>
+<div align="center">Built by <b>Muhammad Usama</b> — React · Express · MongoDB · Gemini AI</div>
