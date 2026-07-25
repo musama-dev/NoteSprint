@@ -20,7 +20,7 @@ function Privacy() {
       </p>
       <h3 className="text-lg font-bold text-slate-800 mt-4">4. Contact Us</h3>
       <p>
-        If you have any questions regarding this Privacy Policy, please contact us at bilalsolution10@gmail.com.
+        If you have any questions regarding this Privacy Policy, please contact us at support@notesprint.ai.
       </p>
     </InfoPage>
   );
