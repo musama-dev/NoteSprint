@@ -13,7 +13,7 @@ function Footer() {
       className="mt-16 border-t border-slate-200 bg-slate-100/70"
     >
       <div className="mx-3 sm:mx-6 md:mx-auto md:max-w-[85%] xl:max-w-[80%] flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-6">
-        <img onClick={()=>navigate("/")} src={logo} alt="NoteSprint AI" className="h-7 w-auto cursor-pointer" />
+        <img onClick={()=>navigate("/")} src={logo} alt="NoteSprint AI" className="h-9 sm:h-11 w-auto cursor-pointer" />
         <p className="text-xs font-medium text-slate-500">
           © 2026 NoteSprint AI. All rights reserved.
         </p>

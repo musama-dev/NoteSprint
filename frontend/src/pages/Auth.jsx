@@ -64,12 +64,12 @@ function Auth() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1.0, ease: "easeOut" }}
-        className="mx-3 sm:mx-6 md:mx-auto md:max-w-[85%] xl:max-w-[80%] mt-4 sm:mt-6 md:mt-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-white/80 backdrop-blur-md px-5 sm:px-8 py-3.5 shadow-sm border border-slate-200/80"
+        className="mx-3 sm:mx-6 md:mx-auto md:max-w-[85%] xl:max-w-[80%] mt-2 sm:mt-3 md:mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-white/80 backdrop-blur-md px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 shadow-sm border border-slate-200/80"
       >
         <motion.img
           src={logo}
           alt="NoteSprint AI"
-          className="h-8 sm:h-10 w-auto"
+          className="h-10 sm:h-13 md:h-15 w-auto cursor-pointer"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.3 }}
@@ -88,7 +88,7 @@ function Auth() {
         </motion.p>
       </motion.header>
 
-      <main className="mx-3 sm:mx-6 md:mx-auto md:max-w-[85%] xl:max-w-[80%] mt-10 sm:mt-16 md:mt-20 flex flex-col md:flex-row items-center md:items-start gap-12 px-4 pb-12 md:pb-16">
+      <main className="mx-3 sm:mx-6 md:mx-auto md:max-w-[85%] xl:max-w-[80%] mt-6 sm:mt-10 md:mt-12 flex flex-col md:flex-row items-center md:items-start gap-12 px-4 pb-12 md:pb-16">
         <div className="flex w-full flex-col items-center text-center md:w-1/2 md:items-start md:text-left">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}

@@ -7,7 +7,7 @@ function InfoPage({ title, children }) {
     <div className="flex min-h-screen flex-col bg-white">
       <div className="mx-3 sm:mx-6 md:mx-auto md:max-w-[85%] xl:max-w-[80%] w-full flex-1 px-4">
         <Link to="/">
-          <img src={logo} alt="NoteSprint AI" className="mt-6 h-8 w-auto" />
+          <img src={logo} alt="NoteSprint AI" className="mt-4 h-10 sm:h-12 w-auto" />
         </Link>
         <h1 className="mt-10 text-3xl sm:text-4xl font-bold text-slate-900">
           {title}

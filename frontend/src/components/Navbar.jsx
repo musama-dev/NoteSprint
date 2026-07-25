@@ -33,9 +33,9 @@ function Navbar({isMyNotes = false,isPaymentPage=false}) {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1.0, ease: "easeOut" }}
-      className="mx-3 sm:mx-6 md:mx-auto md:max-w-[85%] xl:max-w-[80%] mt-1 sm:mt-1.5 mb-2 flex items-center justify-between rounded-2xl bg-white/90 backdrop-blur-md px-4 sm:px-6 md:px-8 py-2 shadow-sm border border-slate-200/80 print:hidden"
+      className="mx-3 sm:mx-6 md:mx-auto md:max-w-[85%] xl:max-w-[80%] mt-2 sm:mt-3 mb-3 flex items-center justify-between rounded-2xl bg-white/90 backdrop-blur-md px-4 sm:px-6 md:px-8 py-2.5 shadow-sm border border-slate-200/80 print:hidden"
     >
-      <img onClick={()=>navigate("/")} src={logo} alt="NoteSprint AI" className="h-8 sm:h-10 w-auto cursor-pointer" />
+      <img onClick={()=>navigate("/")} src={logo} alt="NoteSprint AI" className="h-10 sm:h-12 md:h-14 w-auto cursor-pointer" />
 
       <div className="flex items-center gap-3 sm:gap-4">
         <div className="relative">
