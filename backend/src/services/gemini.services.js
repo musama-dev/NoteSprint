@@ -1,7 +1,7 @@
 import ApiError from "../utils/api-error.js";
 
 const getGeminiUrl = () => {
-  const modelName = process.env.GEMINI_MODEL || "gemini-3.5-flash";
+  const modelName = process.env.GEMINI_MODEL || "gemini-3.6-flash";
   return `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${process.env.GEMINI_API_KEY}`;
 };
 

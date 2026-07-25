@@ -102,7 +102,7 @@ stripe listen --forward-to localhost:5000/api/payment/webhook
 | `NODE_ENV` | `development` / `production` (controls cookie flags) |
 | `FRONTEND_URL` / `CLIENT_URL` | Frontend origin — CORS + Stripe redirects + email links |
 | `GEMINI_API_KEY` | Google AI Studio key |
-| `GEMINI_MODEL` | Optional model override (default `gemini-3-flash-preview`; e.g. `gemini-3.1-flash-lite` to use a separate free-tier quota bucket) |
+| `GEMINI_MODEL` | Optional model override (default `gemini-3.6-flash`) |
 | `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Stripe test keys |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SENDER_EMAIL` | Welcome-email SMTP |
 | `REDIS_URL` | Optional locally (defaults to `redis://localhost:6379`); Redis Key Value URL in prod |
