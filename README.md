@@ -129,6 +129,16 @@ stripe listen --forward-to localhost:5000/api/payment/webhook
 - **MongoDB Atlas:** Allow `0.0.0.0/0` in Network Access so Railway container can connect.
 - **Stripe:** Add a webhook endpoint for `checkout.session.completed` pointing at `/api/payment/webhook`.
 
+## 🗺️ Roadmap
+
+- [x] Quiz Mode — MCQ practice tests generated from notes
+- [ ] Flashcards generated from notes (with Anki export)
+- [ ] Verify Firebase ID tokens server-side (`firebase-admin`) instead of trusting the client
+- [ ] Move note generation itself onto the BullMQ queue with real progress
+- [ ] Per-user rate limiting
+- [ ] Paid Gemini tier for true concurrent generation
+- [ ] Custom domain
+
 ---
 
 <div align="center">Built by <b>Muhammad Usama</b> — React · Express · MongoDB · Gemini AI</div>
