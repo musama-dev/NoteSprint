@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY || "AIzaSyBczo_vFanCiWRSFe6mhfv3upPPfarxQuc",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTHDOMAIN || "notesprint-132f9.firebaseapp.com",
+  authDomain: "notesprint-ai.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECTID || "notesprint-132f9",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGEBUCKET || "notesprint-132f9.firebasestorage.app",
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGINGSENDERID || "1057795456435",
