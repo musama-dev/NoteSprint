@@ -50,6 +50,8 @@ function Auth() {
         alert("Google Sign-in Enable Nahi Hai!\n\nFix: Firebase Console -> Authentication -> Sign-in method -> Google Enable karein.");
       } else if (error.code === "auth/unauthorized-domain") {
         alert("Unauthorized Domain!\n\nFix: Firebase Console -> Authentication -> Settings -> Authorized domains mein 'notesprint-ai.vercel.app' add karein.");
+      } else if (error.code === "ERR_NETWORK" || error.message?.includes("Network Error")) {
+        alert("Backend Connection Error!\n\nFix: Vercel Project Settings -> Environment Variables main VITE_BACKEND_URL = aapka live Railway backend URL add karein.");
       } else if (error.code !== "auth/popup-closed-by-user") {
         alert(`Firebase Auth Error [${error.code || 'unknown'}]:\n${error.message || 'Google Sign-In Failed'}`);
       }

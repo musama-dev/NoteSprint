@@ -5,7 +5,10 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import store from './redux/store.js'
 import { Provider } from 'react-redux'
-export const serverURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+export const serverURL =
+  import.meta.env.VITE_BACKEND_URL ||
+  import.meta.env.VITE_SERVER_URL ||
+  "http://localhost:5000";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
