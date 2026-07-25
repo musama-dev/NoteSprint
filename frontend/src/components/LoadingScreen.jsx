@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 
 function AppleRadialSpinner({ className = "h-8 w-8 text-amber-500" }) {
   return (

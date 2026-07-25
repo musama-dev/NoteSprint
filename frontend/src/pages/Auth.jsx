@@ -8,7 +8,7 @@ import {
   FaFilePdf,
   FaWandMagicSparkles,
 } from "react-icons/fa6";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../utils/firebase";
 import { serverURL } from "../main";

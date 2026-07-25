@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 
 function InfoPage({ title, children }) {
   return (

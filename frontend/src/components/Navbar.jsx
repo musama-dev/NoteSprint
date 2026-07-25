@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { serverURL } from "../main";
 import { setUserData } from "../redux/userSlice";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
 function Navbar({isMyNotes = false,isPaymentPage=false}) {

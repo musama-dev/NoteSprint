@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import mermaid from "mermaid";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 import {
   BarChart,
   Bar,
