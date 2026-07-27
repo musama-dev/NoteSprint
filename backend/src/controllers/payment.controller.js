@@ -74,7 +74,7 @@ const checkout = asyncHandler(async (req, res) => {
 });
 
 const processMockPayment = asyncHandler(async (req, res) => {
-  const { planId, email: targetEmail } = req.body;
+  const { planId } = req.body;
   const plan = PLANS[planId];
 
   if (!plan) {
@@ -87,10 +87,9 @@ const processMockPayment = asyncHandler(async (req, res) => {
   }
 
   const userDbEmail = user.email?.toLowerCase().trim();
-  const inputEmail = targetEmail?.toLowerCase().trim();
 
-  // Authorize if authenticated user email is musama0065@gmail.com OR entered email is musama0065@gmail.com
-  if (userDbEmail !== "musama0065@gmail.com" && inputEmail !== "musama0065@gmail.com") {
+  // ONLY allow mock credit addition if the authenticated session user account is musama0065@gmail.com
+  if (userDbEmail !== "musama0065@gmail.com") {
     throw new ApiError(
       400,
       "Payment processing failed. Please try again."

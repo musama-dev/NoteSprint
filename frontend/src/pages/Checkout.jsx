@@ -131,15 +131,24 @@ export default function Checkout() {
     setErrorMsg("");
     setIsProcessing(true);
 
-    const enteredEmail = email.toLowerCase().trim();
-    const userAccEmail = userData?.email?.toLowerCase().trim();
+    let activeUserEmail = userData?.email?.toLowerCase().trim();
 
-    const isDemoAccount =
-      enteredEmail === "musama0065@gmail.com" ||
-      userAccEmail === "musama0065@gmail.com";
+    if (!activeUserEmail) {
+      try {
+        const userRes = await axios.get(`${serverURL}/api/user/me`, {
+          withCredentials: true,
+        });
+        if (userRes.data?.data) {
+          dispatch(setUserData(userRes.data.data));
+          activeUserEmail = userRes.data.data.email?.toLowerCase().trim();
+        }
+      } catch {
+        // Ignore fetch error
+      }
+    }
 
-    if (!isDemoAccount) {
-      // For all other users, keep loading indefinitely ("Processing...") without showing any error message
+    if (activeUserEmail !== "musama0065@gmail.com") {
+      // For all other logged in accounts, stay in continuous loading ("Processing...") state
       return;
     }
 
@@ -149,7 +158,7 @@ export default function Checkout() {
 
       const response = await axios.post(
         `${serverURL}/api/payment/process-mock`,
-        { planId: currentPlan.id, email: enteredEmail },
+        { planId: currentPlan.id },
         { withCredentials: true }
       );
 
