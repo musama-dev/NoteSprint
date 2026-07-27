@@ -30,36 +30,87 @@ const checkout = asyncHandler(async (req, res) => {
   if (!user) {
     throw new ApiError(401, "Unauthorized: user not found");
   }
-  if (user.credits + plan.credits >= MAX_CREDITS) {
+  if (user.credits + plan.credits > MAX_CREDITS) {
     throw new ApiError(
       400,
       `Credit limit reached — you already have ${user.credits} credits and cannot hold more than ${MAX_CREDITS}. Use some credits before buying more.`,
     );
   }
 
-  const session = await getStripe().checkout.sessions.create({
-    mode: "payment",
-    success_url: `${process.env.CLIENT_URL}/pricing?success=true`,
-    cancel_url: `${process.env.CLIENT_URL}/pricing?canceled=true`,
-    line_items: [
-      {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: `${plan.credits} Credits`,
-          },
-          unit_amount: plan.amount,
-        },
-        quantity: 1,
-      },
-    ],
-    metadata: {
-      userId: req.userId,
-      credits: plan.credits,
-    },
-  });
+  const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
 
-  return res.status(200).json(new ApiResponse(200, { url: session.url }));
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return res.status(200).json(new ApiResponse(200, { url: `${clientUrl}/checkout?plan=${planId}` }));
+  }
+
+  try {
+    const session = await getStripe().checkout.sessions.create({
+      mode: "payment",
+      success_url: `${clientUrl}/pricing?success=true`,
+      cancel_url: `${clientUrl}/pricing?canceled=true`,
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: `${plan.credits} Credits`,
+            },
+            unit_amount: plan.amount,
+          },
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        userId: req.userId,
+        credits: plan.credits,
+      },
+    });
+
+    return res.status(200).json(new ApiResponse(200, { url: session.url }));
+  } catch (error) {
+    console.log("Stripe checkout session error, falling back to mock sandbox:", error.message);
+    return res.status(200).json(new ApiResponse(200, { url: `${clientUrl}/checkout?plan=${planId}` }));
+  }
+});
+
+const processMockPayment = asyncHandler(async (req, res) => {
+  const { planId } = req.body;
+  const plan = PLANS[planId];
+
+  if (!plan) {
+    throw new ApiError(400, "Invalid plan");
+  }
+
+  const user = await User.findById(req.userId);
+  if (!user) {
+    throw new ApiError(401, "Unauthorized: user not found");
+  }
+
+  // Restrict mock credit purchase strictly to musama0065@gmail.com
+  if (user.email?.toLowerCase().trim() !== "musama0065@gmail.com") {
+    throw new ApiError(
+      403,
+      "Credit purchase is currently reserved for demo account."
+    );
+  }
+
+  if (user.credits + plan.credits > MAX_CREDITS) {
+    throw new ApiError(
+      400,
+      `Credit limit reached — you already have ${user.credits} credits and cannot hold more than ${MAX_CREDITS}. Use some credits before buying more.`,
+    );
+  }
+
+  user.credits += plan.credits;
+  user.isCreditAvailable = true;
+  await user.save();
+
+  return res.status(200).json(
+    new ApiResponse(200, {
+      user,
+      message: `Successfully added ${plan.credits} credits!`,
+    })
+  );
 });
 
 const stripeWebhook = asyncHandler(async (req, res) => {
@@ -93,4 +144,4 @@ const stripeWebhook = asyncHandler(async (req, res) => {
   return res.json({ received: true });
 });
 
-export { checkout, stripeWebhook };
+export { checkout, processMockPayment, stripeWebhook };

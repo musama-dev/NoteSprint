@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes} from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import Home from './pages/Home'
 import Auth from './pages/Auth'
 import Notes from './pages/Notes'
@@ -11,26 +11,28 @@ import LoadingScreen from "./components/LoadingScreen"
 import Contact from "./pages/Contact"
 import Terms from "./pages/Terms"
 import Privacy from "./pages/Privacy"
+import Checkout from "./pages/Checkout"
 
 function App() {
   useCurrentUser()
 
-  const {userData, loading} = useSelector((state)=>state.user)
+  const { userData, loading } = useSelector((state) => state.user)
 
   if (loading) return <LoadingScreen />
 
   return (
     <>
       <Routes>
-        <Route path='/' element={!userData ? <Navigate to="/auth"/> : <Home/>} />
-        <Route path='/auth' element={userData ? <Navigate to="/"/> : <Auth/>} />
-        <Route path='/notes' element={userData ? <Notes/> : <Navigate to="/auth"/>} />
-        <Route path='/pricing' element={userData ? <Pricing/> : <Navigate to="/auth"/>} />
-        <Route path='/history' element={userData ? <History/> : <Navigate to="/auth"/>} />
-        <Route path='/about' element={<About/>} />
-        <Route path='/contact' element={<Contact/>} />
-        <Route path='/terms' element={<Terms/>} />
-        <Route path='/privacy' element={<Privacy/>} />
+        <Route path='/' element={!userData ? <Navigate to="/auth" /> : <Home />} />
+        <Route path='/auth' element={userData ? <Navigate to="/" /> : <Auth />} />
+        <Route path='/notes' element={userData ? <Notes /> : <Navigate to="/auth" />} />
+        <Route path='/pricing' element={userData ? <Pricing /> : <Navigate to="/auth" />} />
+        <Route path='/checkout' element={userData ? <Checkout /> : <Navigate to="/auth" />} />
+        <Route path='/history' element={userData ? <History /> : <Navigate to="/auth" />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/terms' element={<Terms />} />
+        <Route path='/privacy' element={<Privacy />} />
       </Routes>
     </>
   )

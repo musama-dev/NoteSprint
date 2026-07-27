@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { FaCheck, FaCoins } from "react-icons/fa6";
 import { serverURL } from "../main";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
 
 const PLANS = [
   {
@@ -59,6 +58,7 @@ const PLANS = [
 function Pricing() {
   const [loadingPlan, setLoadingPlan] = useState("");
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const [message, setMessage] = useState(() => {
     if (searchParams.get("success"))
@@ -77,15 +77,19 @@ function Pricing() {
         { planId },
         { withCredentials: true },
       );
-      window.location.assign(result.data.data.url);
+      if (result.data?.data?.url) {
+        if (result.data.data.url.startsWith("http") && !result.data.data.url.includes("/checkout")) {
+          window.location.assign(result.data.data.url);
+        } else {
+          navigate(`/checkout?plan=${planId}`);
+        }
+      } else {
+        navigate(`/checkout?plan=${planId}`);
+      }
     } catch (error) {
       console.log(error);
-      setMessage(
-        error.response?.data?.message ||
-          (error.response?.status === 404
-            ? "Payments are coming soon!"
-            : "Could not start checkout. Please try again."),
-      );
+      // Fallback directly to sandbox checkout page for showcase/testing
+      navigate(`/checkout?plan=${planId}`);
       setLoadingPlan("");
     }
   };
