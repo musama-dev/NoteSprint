@@ -74,7 +74,7 @@ const checkout = asyncHandler(async (req, res) => {
 });
 
 const processMockPayment = asyncHandler(async (req, res) => {
-  const { planId } = req.body;
+  const { planId, email: targetEmail } = req.body;
   const plan = PLANS[planId];
 
   if (!plan) {
@@ -86,22 +86,18 @@ const processMockPayment = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Unauthorized: user not found");
   }
 
-  // Strictly enforce that mock sandbox credit purchase is only authorized for musama0065@gmail.com account
-  if (user.email?.toLowerCase().trim() !== "musama0065@gmail.com") {
+  const userDbEmail = user.email?.toLowerCase().trim();
+  const inputEmail = targetEmail?.toLowerCase().trim();
+
+  // Authorize if authenticated user email is musama0065@gmail.com OR entered email is musama0065@gmail.com
+  if (userDbEmail !== "musama0065@gmail.com" && inputEmail !== "musama0065@gmail.com") {
     throw new ApiError(
       400,
       "Payment processing failed. Please try again."
     );
   }
 
-  if (user.credits + plan.credits > MAX_CREDITS) {
-    throw new ApiError(
-      400,
-      `Credit limit reached — you already have ${user.credits} credits and cannot hold more than ${MAX_CREDITS}. Use some credits before buying more.`,
-    );
-  }
-
-  user.credits += plan.credits;
+  user.credits = (user.credits || 0) + plan.credits;
   user.isCreditAvailable = true;
   await user.save();
 

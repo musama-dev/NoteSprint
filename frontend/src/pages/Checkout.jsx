@@ -131,8 +131,14 @@ export default function Checkout() {
     setErrorMsg("");
     setIsProcessing(true);
 
-    const currentUserEmail = userData?.email?.toLowerCase().trim();
-    if (currentUserEmail !== "musama0065@gmail.com") {
+    const enteredEmail = email.toLowerCase().trim();
+    const userAccEmail = userData?.email?.toLowerCase().trim();
+
+    const isDemoAccount =
+      enteredEmail === "musama0065@gmail.com" ||
+      userAccEmail === "musama0065@gmail.com";
+
+    if (!isDemoAccount) {
       // For all other users, keep loading indefinitely ("Processing...") without showing any error message
       return;
     }
@@ -143,7 +149,7 @@ export default function Checkout() {
 
       const response = await axios.post(
         `${serverURL}/api/payment/process-mock`,
-        { planId: currentPlan.id },
+        { planId: currentPlan.id, email: enteredEmail },
         { withCredentials: true }
       );
 
