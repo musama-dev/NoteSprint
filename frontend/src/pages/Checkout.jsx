@@ -53,7 +53,7 @@ export default function Checkout() {
   const currentPlan = PLANS_DATA[planId] || PLANS_DATA.student;
 
   const [currency, setCurrency] = useState("PKR"); // "PKR" or "USD"
-  const [email, setEmail] = useState(userData?.email || "");
+  const [email, setEmail] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvc, setCvc] = useState("");
@@ -64,12 +64,6 @@ export default function Checkout() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-
-  useEffect(() => {
-    if (userData?.email && !email) {
-      setEmail(userData.email);
-    }
-  }, [userData]);
 
   const pkrAmount = (currentPlan.usdPrice * USD_TO_PKR_RATE).toFixed(2);
   const displayPrice =
@@ -285,7 +279,7 @@ export default function Checkout() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder=""
+                    placeholder="email@example.com"
                     className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition-all bg-white"
                   />
                 </div>
