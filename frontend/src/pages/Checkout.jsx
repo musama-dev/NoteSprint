@@ -180,11 +180,13 @@ export default function Checkout() {
         navigate("/pricing?success=true");
       }, 1000);
     } catch (err) {
-      console.error(err);
-      setErrorMsg(
-        err.response?.data?.message ||
-          "Payment processing failed. Please try again."
-      );
+      console.error("Payment Error:", err);
+      const serverMessage = err.response?.data?.message;
+      if (err.code === "ERR_NETWORK" || err.message?.includes("Network Error")) {
+        setErrorMsg("Backend server network error. Please check server connection.");
+      } else {
+        setErrorMsg(serverMessage || err.message || "Payment processing failed. Please try again.");
+      }
       setIsProcessing(false);
     }
   };
