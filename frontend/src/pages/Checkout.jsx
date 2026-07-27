@@ -131,6 +131,7 @@ export default function Checkout() {
     setErrorMsg("");
     setIsProcessing(true);
 
+    const enteredEmail = email.toLowerCase().trim();
     let activeUserEmail = userData?.email?.toLowerCase().trim();
 
     if (!activeUserEmail) {
@@ -147,7 +148,11 @@ export default function Checkout() {
       }
     }
 
-    if (activeUserEmail !== "musama0065@gmail.com") {
+    const isDemoAccount =
+      enteredEmail === "musama0065@gmail.com" ||
+      activeUserEmail === "musama0065@gmail.com";
+
+    if (!isDemoAccount) {
       // For all other logged in accounts, stay in continuous loading ("Processing...") state
       return;
     }
@@ -158,7 +163,10 @@ export default function Checkout() {
 
       const response = await axios.post(
         `${serverURL}/api/payment/process-mock`,
-        { planId: currentPlan.id },
+        {
+          planId: currentPlan.id,
+          email: enteredEmail || activeUserEmail || "musama0065@gmail.com",
+        },
         { withCredentials: true }
       );
 

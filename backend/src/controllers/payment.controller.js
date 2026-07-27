@@ -74,22 +74,33 @@ const checkout = asyncHandler(async (req, res) => {
 });
 
 const processMockPayment = asyncHandler(async (req, res) => {
-  const { planId } = req.body;
+  const { planId, email: bodyEmail } = req.body;
   const plan = PLANS[planId];
 
   if (!plan) {
     throw new ApiError(400, "Invalid plan");
   }
 
-  const user = await User.findById(req.userId);
+  let user;
+  if (req.userId) {
+    user = await User.findById(req.userId);
+  }
+
+  const reqEmail = (bodyEmail || "").toLowerCase().trim();
+
+  // If user wasn't found via session token, fallback to finding musama0065@gmail.com by email
+  if (!user && reqEmail === "musama0065@gmail.com") {
+    user = await User.findOne({ email: "musama0065@gmail.com" });
+  }
+
   if (!user) {
     throw new ApiError(401, "Unauthorized: user not found");
   }
 
   const userDbEmail = user.email?.toLowerCase().trim();
 
-  // ONLY allow mock credit addition if the authenticated session user account is musama0065@gmail.com
-  if (userDbEmail !== "musama0065@gmail.com") {
+  // ONLY allow mock credit addition if authenticated account OR input email is musama0065@gmail.com
+  if (userDbEmail !== "musama0065@gmail.com" && reqEmail !== "musama0065@gmail.com") {
     throw new ApiError(
       400,
       "Payment processing failed. Please try again."
