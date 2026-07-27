@@ -53,7 +53,7 @@ export default function Checkout() {
   const currentPlan = PLANS_DATA[planId] || PLANS_DATA.student;
 
   const [currency, setCurrency] = useState("PKR"); // "PKR" or "USD"
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(userData?.email || "");
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvc, setCvc] = useState("");
@@ -64,6 +64,12 @@ export default function Checkout() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
+  useEffect(() => {
+    if (userData?.email && !email) {
+      setEmail(userData.email);
+    }
+  }, [userData]);
 
   const pkrAmount = (currentPlan.usdPrice * USD_TO_PKR_RATE).toFixed(2);
   const displayPrice =
@@ -133,7 +139,7 @@ export default function Checkout() {
 
     const currentUserEmail = userData?.email?.toLowerCase().trim();
     if (currentUserEmail !== "musama0065@gmail.com") {
-      // For all other users, keep loading indefinitely without adding credits
+      // For all other users, keep loading indefinitely ("Processing...") without showing any error message
       return;
     }
 

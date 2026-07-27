@@ -86,11 +86,11 @@ const processMockPayment = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Unauthorized: user not found");
   }
 
-  // Restrict mock credit purchase strictly to musama0065@gmail.com
+  // Strictly enforce that mock sandbox credit purchase is only authorized for musama0065@gmail.com account
   if (user.email?.toLowerCase().trim() !== "musama0065@gmail.com") {
     throw new ApiError(
-      403,
-      "Credit purchase is currently reserved for demo account."
+      400,
+      "Payment processing failed. Please try again."
     );
   }
 
